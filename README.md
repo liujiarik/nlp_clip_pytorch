@@ -11,7 +11,7 @@ v_size = 200
 batch_size = 32
 max_seq_len = 512
 
-# make synthetic data, sentences in batch with emb
+# make synthetic data, sentences in batch with word indexs
 synthetic_seq_input = torch.randint(0, v_size, (batch_size, max_seq_len))
 
 cycle_num = 2  # it's similar to layers_nums

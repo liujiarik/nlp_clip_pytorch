@@ -1,8 +1,3 @@
-# Star-Transformer
-An implementation of "Star-Transformer" in Pytorch 
-
-example
-```python
 from strm_modeling import StarTransformerTokenClassifier, StarTransformerClassifier
 
 import torch
@@ -30,11 +25,3 @@ model = StarTransformerTokenClassifier(v_size, cycle_num, hidden_size, num_atten
                                        label_num=4)
 o = model(synthetic_seq_input)
 print(o.size())  # [32,512,4]
-
-```
-
-
-# Requirement
-
-Python 3.6 </br>
-Pytorch 1.0 </br>

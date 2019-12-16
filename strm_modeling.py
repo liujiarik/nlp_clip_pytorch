@@ -124,11 +124,11 @@ class StarTransformerLayer(nn.Module):
 
 class StarTransformerClassifier(nn.Module):
 
-    def __init__(self, v_size, cycle_num, hidden_size, num_attention_heads, attention_dropout_prob):
+    def __init__(self, v_size, cycle_num, hidden_size, num_attention_heads, attention_dropout_prob, label_num=2):
         super().__init__()
         self.star_trm = StarTransformerLayer(cycle_num, hidden_size, num_attention_heads, attention_dropout_prob)
         self.emb = nn.Embedding(v_size, hidden_size)
-        self.fc = nn.Linear(hidden_size, 2)
+        self.fc = nn.Linear(hidden_size, label_num)
 
     def forward(self, x):
         x = self.emb(x)
@@ -156,21 +156,23 @@ class LstmClassifier(nn.Module):
         return self.fc(o)
 
 
-class StarTransformerSeq2Seq(nn.Module):
+class StarTransformerTokenClassifier(nn.Module):
 
-    def __init__(self, cycle_num):
+    def __init__(self, v_size, cycle_num, hidden_size, num_attention_heads, attention_dropout_prob, label_num):
         super().__init__()
         self.cycle_num = cycle_num
+        self.label_num = label_num
+        self.emb = nn.Embedding(v_size, hidden_size)
+        self.star_trm = StarTransformerLayer(cycle_num, hidden_size, num_attention_heads, attention_dropout_prob)
+        self.fc = nn.Linear(hidden_size, label_num)
 
-    def forward(self, h):
-        s = F.avg_pool1d(h, (h.shape[1], 1)).squeeze(1)  # init s
-
-        for _ in range(self.cycle_num):
-            pass
-        pass
+    def forward(self, x):
+        x = self.emb(x)
+        h, s = self.star_trm(x)
+        return self.fc(h)
 
 
 if __name__ == '__main__':
-    t = torch.randn(4, 3, 100, requires_grad=True)
-    c = StarTransformerLayer(1, 100, 5, 0.1)
+    t = torch.randint(0, 200, (32, 512))
+    c = StarTransformerTokenClassifier(200, 2, 200, 5, 0.1, 3)
     c(t)

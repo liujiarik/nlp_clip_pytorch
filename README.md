@@ -1,4 +1,4 @@
-# Star-Transformer
+# 1 Star-Transformer
 An implementation of "Star-Transformer" in Pytorch 
 
 example
@@ -32,7 +32,25 @@ o = model(synthetic_seq_input)
 print(o.size())  # [32,512,4]
 
 ```
+# 2 Adaptive Embedding
+An implementation of "Adaptive Embedding" in Pytorch 
 
+example
+```python
+import torch
+from adp_emb import AdaptiveEmbedding
+
+v_size = 1000000
+batch_size = 32
+max_seq_len = 512
+v_dim = 512
+synthetic_seq_input = torch.randint(0, v_size, (batch_size, max_seq_len))
+emb = AdaptiveEmbedding(v_size, v_dim, cutoffs=[50000, 200000, 700000])
+# emb = nn.Embedding(v_size, v_dim)
+o = emb(synthetic_seq_input)
+print(o.size())
+
+```
 
 # Requirement
 

@@ -1,3 +1,7 @@
+# author : liujiarik
+# mail : liujiarik@163.com
+"""PyTorch Adaptive Embedding Layers. """
+
 import torch
 import torch.nn as nn
 

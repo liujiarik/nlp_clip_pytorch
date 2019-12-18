@@ -1,3 +1,6 @@
+# author : liujiarik
+# mail : liujiarik@163.com
+"""PyTorch  StarTransformerLayer  """
 import copy
 import math
 import torch
